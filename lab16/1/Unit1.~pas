@@ -1,0 +1,50 @@
+unit Unit1;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, DB, ADODB, DBTables, ExtCtrls, QuickRpt, StdCtrls, QRCtrls;
+
+type
+  TForm1 = class(TForm)
+    Button1: TButton;
+    QuickRep1: TQuickRep;
+    QRBand1: TQRBand;
+    QRBand2: TQRBand;
+    Button2: TButton;
+    ADOConnection1: TADOConnection;
+    ADOTable1: TADOTable;
+    procedure FormCreate(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+   QuickRep1.Hide;
+end;
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+  QuickRep1.Preview;
+end;
+
+procedure TForm1.Button2Click(Sender: TObject);
+begin
+   QuickRep1.Print;
+end;
+
+end.
+ 

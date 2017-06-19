@@ -1,0 +1,119 @@
+unit Unit1;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, DatMod, Grids, DBGrids, DBCtrls, Buttons, ExtDlgs, JPEG,
+  DB, Unit2;
+
+type
+  TForm1 = class(TForm)
+    GroupBox1: TGroupBox;
+    GroupBox2: TGroupBox;
+    GroupBox3: TGroupBox;
+    GroupBox4: TGroupBox;
+    DBGrid1: TDBGrid;
+    DBGrid2: TDBGrid;
+    DBGrid3: TDBGrid;
+    DBGrid4: TDBGrid;
+    DBMemo1: TDBMemo;
+    DBImage1: TDBImage;
+    DBImage2: TDBImage;
+    Label1: TLabel;
+    Label2: TLabel;
+    BitBtn1: TBitBtn;
+    BitBtn2: TBitBtn;
+    OpenPictureDialog1: TOpenPictureDialog;
+    Button1: TButton;
+    procedure FormShow(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure BitBtn1Click(Sender: TObject);
+    procedure BitBtn2Click(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    procedure PictureToGraphicField(F: TField);
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+var FirstShow: boolean = true;
+
+procedure TForm1.FormShow(Sender: TObject);
+begin
+if FirstShow then
+begin
+  FirstShow:= false;
+  dm.TaList.Open;
+  dm.TaInst.Open;
+  dm.TaChar.Open;
+  dm.TaPover.Open;
+end;
+end;
+
+procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  dm.TaPover.Close;
+  dm.TaChar.Close;
+  dm.TaInst.Close;
+  dm.TaList.Close;
+end;
+
+procedure TForm1.PictureToGraphicField(F: TField);
+var
+FileName: TFileName;
+Bmp: TBitmap;
+jpg: TJPEGImage;
+D: TDataSet;
+Begin
+With dm, Form1 do
+Begin
+  D:= F.DataSet; // безліч даних, що містить поле F
+  if D.Active then // якщо таблиця відкрита, то
+    if D.RecordCount > 0 then // якщо в таблиці є записи, то
+      if OpenPictureDialog1.Execute then // якщо файл картинки обраний, то
+        begin
+        if not (D.State in [dsEdit]) then
+          D.Edit; // перехід таблиці в режим редагування
+        FileName := OpenPictureDialog1.FileName; // ім'я файлу з картинкою
+        Try
+          Bmp:= TBitmap.Create; // створюємо Bitmap в пам'яті
+          jpg:= TJPEGImage.Create; // створюємо JPEG
+          jpg.CompressionQuality:= 100; // якість стиснення зображення
+          jpg.Compress; // стиснення
+          jpg.LoadFromFile(FileName); // завантаження
+          bmp.Assign(jpg); // передача з JPEG в BMP
+          F.Assign(bmp); // передача картинки з Bitmap в полі "Картинка"
+          D.Post; // збереження запису
+        except // у разі виключної ситуації робити:
+          ShowMessage('Не вдалось завантажити картинку.'); // повідомлення про помилку
+        FreeAndNil(jpg); // звільнення пам'яті, зайнятої JPEG
+        FreeAndNil(bmp); // звільнення пам'яті, зайнятої Bitmap
+        end;
+    end;
+  end;
+end;
+
+procedure TForm1.BitBtn1Click(Sender: TObject);
+begin
+  PictureToGraphicField(dm.TaInst.FieldByName('Картинка'));
+end;
+
+procedure TForm1.BitBtn2Click(Sender: TObject);
+begin
+  PictureToGraphicField(dm.TaPover.FieldByName('Фото'));
+end;
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+  Form2.Show;
+end;
+
+end.

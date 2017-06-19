@@ -1,0 +1,17 @@
+object Form4: TForm4
+  Left = 1062
+  Top = 430
+  Width = 500
+  Height = 500
+  Caption = 'fsMDIForm'
+  Color = clYellow
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -13
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  FormStyle = fsMDIForm
+  OldCreateOrder = False
+  PixelsPerInch = 120
+  TextHeight = 16
+end

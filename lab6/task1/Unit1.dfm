@@ -1,0 +1,97 @@
+object Form1: TForm1
+  Left = 406
+  Top = 219
+  Width = 1067
+  Height = 658
+  Caption = #1051#1072#1073#1086#1088#1072#1090#1086#1088#1085#1072' '#1088#1086#1073#1086#1090#1072' '#8470'6'
+  Color = clMoneyGreen
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -13
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  FormStyle = fsMDIForm
+  OldCreateOrder = False
+  PixelsPerInch = 120
+  TextHeight = 16
+  object Button1: TButton
+    Left = 488
+    Top = 264
+    Width = 75
+    Height = 20
+    Caption = 'Exit'
+    Font.Charset = RUSSIAN_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Calibri'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 0
+    OnClick = Button1Click
+    OnMouseMove = Button1MouseMove
+  end
+  object Button2: TButton
+    Left = 232
+    Top = 464
+    Width = 75
+    Height = 20
+    Caption = 'fsNormal'
+    Font.Charset = RUSSIAN_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Calibri'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 1
+    OnClick = Button2Click
+    OnMouseMove = Button2MouseMove
+  end
+  object Button3: TButton
+    Left = 384
+    Top = 464
+    Width = 75
+    Height = 20
+    Caption = 'fsMDIChild'
+    Font.Charset = RUSSIAN_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Calibri'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 2
+    OnClick = Button3Click
+    OnMouseMove = Button3MouseMove
+  end
+  object Button4: TButton
+    Left = 568
+    Top = 464
+    Width = 75
+    Height = 20
+    Caption = 'fsMDIForm'
+    Font.Charset = RUSSIAN_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Calibri'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 3
+    OnClick = Button4Click
+    OnMouseMove = Button4MouseMove
+  end
+  object Button5: TButton
+    Left = 728
+    Top = 464
+    Width = 75
+    Height = 20
+    Caption = 'fsStayOnTop'
+    Font.Charset = RUSSIAN_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Calibri'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 4
+    OnClick = Button5Click
+    OnMouseMove = Button5MouseMove
+  end
+end

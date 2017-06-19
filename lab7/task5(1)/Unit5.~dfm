@@ -1,0 +1,19 @@
+object Form5: TForm5
+  Left = 1145
+  Top = 482
+  Width = 223
+  Height = 223
+  Caption = 'Form5'
+  Color = clBlue
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -13
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  FormStyle = fsMDIChild
+  OldCreateOrder = False
+  Position = poDefault
+  Visible = True
+  PixelsPerInch = 120
+  TextHeight = 16
+end

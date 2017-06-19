@@ -1,0 +1,72 @@
+unit Unit2;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, OleCtnrs, StdCtrls;
+
+type
+  TForm2 = class(TForm)
+    OleContainer1: TOleContainer;
+    OleContainer2: TOleContainer;
+    OleContainer3: TOleContainer;
+    Button1: TButton;
+    Button2: TButton;
+    Button3: TButton;
+    procedure FormCreate(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form2: TForm2;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm2.FormCreate(Sender: TObject);
+begin
+  Form2.Height := 500;
+  Form2.Width := 200;
+  OleContainer1.Left := (Form2.Width - OleContainer1.Width) div 2;
+  Button1.Left := OleContainer1.Left;
+  OleContainer2.Left := OleContainer1.Left;
+  Button2.Left := OleContainer1.Left;
+  OleContainer3.Left := OleContainer1.Left;
+  Button3.Left := OleContainer1.Left;
+
+  OleContainer1.Top := 50;
+  Button1.Top := 50 + 70;
+  OleContainer2.Top := Button1.Top + 70;
+  Button2.Top := OleContainer2.Top + 70;
+  OleContainer3.Top := Button2.Top + 70;
+  Button3.Top := OleContainer3.Top + 70;
+
+  OleContainer1.CreateObjectFromFile(ExtractFilePath(Application.ExeName) + '1.jpg', false);
+  OleContainer2.CreateObjectFromFile(ExtractFilePath(Application.ExeName) + '2.jpg', false);
+  OleContainer3.CreateObjectFromFile(ExtractFilePath(Application.ExeName) + '3.jpg', false);
+end;
+
+procedure TForm2.Button1Click(Sender: TObject);
+begin
+  OleContainer1.DoVerb(ovShow);
+end;
+
+procedure TForm2.Button2Click(Sender: TObject);
+begin
+  OleContainer2.DoVerb(ovShow);
+end;
+
+procedure TForm2.Button3Click(Sender: TObject);
+begin
+  OleContainer3.DoVerb(ovShow);
+end;
+
+end.

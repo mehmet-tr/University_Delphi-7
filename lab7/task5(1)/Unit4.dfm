@@ -1,0 +1,20 @@
+object Form4: TForm4
+  Left = 302
+  Top = 533
+  Width = 308
+  Height = 207
+  BorderIcons = []
+  Caption = 'Form4'
+  Color = clYellow
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -13
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  FormStyle = fsMDIChild
+  OldCreateOrder = False
+  Position = poDefault
+  Visible = True
+  PixelsPerInch = 120
+  TextHeight = 16
+end

@@ -1,0 +1,55 @@
+unit Unit1;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ComCtrls, StdCtrls;
+
+type
+  TForm1 = class(TForm)
+    PageControl1: TPageControl;
+    TabSheet1: TTabSheet;
+    TabSheet2: TTabSheet;
+    Memo1: TMemo;
+    Memo2: TMemo;
+    procedure Memo2Change(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm1.Memo2Change(Sender: TObject);
+var i, j : integer;
+var str, code : string;
+begin
+  i := 0;
+  Memo1.Clear;
+  while  i < Memo2.Lines.Count do
+  begin
+  str := Memo2.Lines[i];
+  code := '';
+  j := 1;
+  while (j <= Length(str)) do
+    begin
+      if code <> '' then
+        code := code + ',';
+      code := code + IntToStr(Ord(str[j]));
+      j := j + 1;
+    end;
+  if code <> '' then
+    code := code + '.';
+  Memo1.Lines.Add(code);
+  i := i + 1;
+  end;
+end;
+
+end.

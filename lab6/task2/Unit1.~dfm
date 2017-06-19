@@ -1,0 +1,33 @@
+object Form1: TForm1
+  Left = 476
+  Top = 266
+  Width = 866
+  Height = 732
+  Caption = 'Form1'
+  Color = clMoneyGreen
+  DragMode = dmAutomatic
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -13
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  OldCreateOrder = False
+  OnDragDrop = FormDragDrop
+  OnDragOver = FormDragOver
+  DesignSize = (
+    858
+    700)
+  PixelsPerInch = 120
+  TextHeight = 16
+  object Panel1: TPanel
+    Left = 320
+    Top = 304
+    Width = 185
+    Height = 41
+    Anchors = []
+    BorderStyle = bsSingle
+    Caption = 'Panel'
+    DragMode = dmAutomatic
+    TabOrder = 0
+  end
+end

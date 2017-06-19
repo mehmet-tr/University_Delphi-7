@@ -1,0 +1,517 @@
+unit Unit1;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ColorGrd, StdCtrls, Spin, ComCtrls, ImgList, ToolWin, ExtCtrls,
+  Menus, Math, Gifimage;
+
+type
+  TForm1 = class(TForm)
+    Image1: TImage;
+    ToolBar1: TToolBar;
+    ImageList1: TImageList;
+    OpenDialog1: TOpenDialog;
+    SaveDialog1: TSaveDialog;
+    SpinEdit1: TSpinEdit;
+    ColorGrid1: TColorGrid;
+    Panel1: TPanel;
+    Timer1: TTimer;
+    ToolButton1: TToolButton;
+    ToolButton2: TToolButton;
+    ToolButton3: TToolButton;
+    ToolButton4: TToolButton;
+    ToolButton5: TToolButton;
+    Shape1: TShape;
+    Shape2: TShape;
+    Shape3: TShape;
+    Shape4: TShape;
+    Shape5: TShape;
+    ToolButton6: TToolButton;
+    ToolButton7: TToolButton;
+    ToolButton8: TToolButton;
+    ToolButton9: TToolButton;
+    Shape6: TShape;
+    ToolButton11: TToolButton;
+    OpenDialog2: TOpenDialog;
+    ToolButton10: TToolButton;
+    ToolButton13: TToolButton;
+    Edit1: TEdit;
+    procedure Image1MouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure Image1MouseMove(Sender: TObject; Shift: TShiftState; X,
+      Y: Integer);
+    procedure Image1MouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure FormCreate(Sender: TObject);
+    procedure Timer1Timer(Sender: TObject);
+    procedure ToolButton2Click(Sender: TObject);
+    procedure ToolButton4Click(Sender: TObject);
+    procedure ToolButton3Click(Sender: TObject);
+    procedure ToolButton5Click(Sender: TObject);
+    procedure ToolButton1Click(Sender: TObject);
+    procedure FormResize(Sender: TObject);
+    procedure FormKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure ToolButton8Click(Sender: TObject);
+    procedure ToolButton9Click(Sender: TObject);
+    procedure Panel1MouseMove(Sender: TObject; Shift: TShiftState; X,
+      Y: Integer);
+    procedure ToolButton7Click(Sender: TObject);
+    procedure ToolButton6Click(Sender: TObject);
+    procedure FormMouseMove(Sender: TObject; Shift: TShiftState; X,
+      Y: Integer);
+    procedure ToolButton11Click(Sender: TObject);
+    procedure ToolButton13Click(Sender: TObject);
+    procedure Edit1KeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+  private
+    { Private declarations }
+  public
+    function func(x1, y1, x2, y2 : integer) : real;
+    procedure line();
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+  tp, sx, sy, mx, my, count, i, ft, fb, fl, fr : integer;
+  isMousePressed, Panel_Locked : boolean;
+implementation
+
+{$R *.dfm}
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+  Panel_LOcked := true;
+  Panel1.Visible := true;
+  isMousePressed := false;
+  tp := 1;
+  Image1.Left := 0;
+  Image1.Top := 0; 
+  Image1.Height := 720;
+  Image1.Width := 1280;
+  Form1.Height := 720 + 40;
+  Form1.Width := 1280 + 17;
+  Image1.Canvas.Brush.Style := bsClear;
+end;
+
+procedure TForm1.Timer1Timer(Sender: TObject);
+begin
+  Timer1.Interval := 1;
+  if (tp = 3) and isMousePressed then
+  begin
+  i := i + 1;
+  if (i > 2) then
+    begin
+    line();
+    Shape4.Visible := True;
+    Shape5.Visible := True;
+    end;
+  end;
+  if isMousePressed = False or (tp = 1) or (tp = 2) then
+    Image1.Refresh;
+end;
+
+procedure TForm1.line();
+var xp, yp, k : integer;
+var p, l : real;
+begin
+      if (sx <> mx) then
+      begin
+      l := func(mx, my, sx, sy);
+      k := trunc(l / 65);
+      if (k = 0) then
+        k := 1;
+      if (l <= 20) then
+      begin
+        count := 0;
+        k := 0;
+      end;
+      count := count + k;
+      if (count >= l) then
+        count := k;
+      p := count / l;
+      xp := trunc(sx + ((mx - sx) * p));
+      yp := trunc(sy + ((my - sy) * p));
+
+      Shape4.Left := xp - 2;
+      Shape4.Top := yp  - 2;
+
+      xp := trunc(sx + ((mx - sx) * (1 - p)));
+      yp := trunc(sy + ((my - sy) * (1 - p)));
+
+      Shape5.Left := xp - 2;
+      Shape5.Top := yp - 2;
+
+      Image1.Refresh;
+      end
+      else
+      begin
+        Shape4.Visible := false;
+        Shape5.Visible := false;
+      end;
+end;
+
+function TForm1.func(x1, y1, x2, y2 : integer) : real;
+begin
+   func := sqrt(power((x2 - x1),2) + power((y2 - y1),2));
+end;
+
+procedure TForm1.Image1MouseDown(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+var aRect : TRect;
+var rx, ry : integer;
+begin
+  if Image1.Height < fb then
+    ry := Image1.Height
+  else
+    ry := fb;
+
+  if Image1.Width < fr then
+    rx := Image1.Width
+  else
+    rx := fr;
+
+  aRect := Rect(Form1.Left + 9, Form1.Top + 31, Form1.Left + rx + 8, Form1.Top + 31 + ry);
+  ClipCursor(@aRect);
+  
+  isMousePressed := true;
+  Image1.Canvas.MoveTo(X, Y);
+  sx := x;
+  sy := y;
+  mx := x;
+  my := y;
+  if tp = 6 then
+  begin
+   Image1.Canvas.Font.Height := SpinEdit1.Value;
+   if Button = mbRight then
+      Image1.Canvas.Font.Color := ColorGrid1.BackgroundColor
+   else
+      Image1.Canvas.Font.Color := ColorGrid1.ForegroundColor;
+   Edit1.Font.Color := Image1.Canvas.Font.Color;
+   Edit1.Font.Height := Image1.Canvas.Font.Height;
+   Edit1.Text := '';
+   Edit1.Left := X;
+   Edit1.Top := Y;
+   Edit1.Width := Edit1.Height * 5;
+   Edit1.Visible := True;
+   Edit1.Enabled := True;
+   Edit1.SetFocus;
+  end
+  else if tp <> 2 then
+  begin
+   Image1.Canvas.Pen.Width := SpinEdit1.Value;
+   if Button = mbRight then
+      Image1.Canvas.Pen.Color := ColorGrid1.BackgroundColor
+   else
+      Image1.Canvas.Pen.Color := ColorGrid1.ForegroundColor;
+   if tp <> 3 then
+    Shape1.Pen.Color := Image1.Canvas.Pen.Color
+   else
+    Shape1.Pen.Color := clBlack;
+  end
+  else
+    begin
+      Image1.Canvas.Pen.Width := SpinEdit1.Value * 10;
+      Image1.Canvas.Pen.Color := RGB(255, 255, 255);
+    end;
+  if  (tp = 3) then
+  begin
+  count := 0;
+        Shape1.Top := y;
+        Shape1.Left := x;
+
+        Shape2.Top := Shape1.Top;
+        Shape3.Top := Shape1.Top;
+        Shape4.Top := Shape1.Top;
+
+        Shape2.Left := Shape1.Left;
+        Shape3.Left := Shape1.Left;
+        Shape4.Left := Shape1.Left;
+
+        Shape1.Visible := True;
+        Shape2.Visible := True;
+        Shape3.Visible := True;
+  end;
+  if (tp = 4) or (tp = 5) then
+    begin
+       Shape1.Top := y;
+       Shape1.Left := x;
+       Shape1.Width := 0;
+       Shape1.Height := 0;
+       Shape1.Visible := True;
+    end;
+    if (tp = 1) or (tp = 2) then
+      Image1MouseMove(Sender, Shift, X,  Y);
+end;
+
+procedure TForm1.Image1MouseMove(Sender: TObject; Shift: TShiftState; X,
+  Y: Integer);
+var xp, yp, k, r, b : integer;
+begin
+
+if tp = 2 then
+    begin
+      Shape6.Visible := False;
+      k := SpinEdit1.Value * 10;
+      if Image1.Width < fr then
+        r := Image1.Width
+      else
+        r := fr;
+
+      if Image1.Height < fb then
+        b := Image1.Height
+      else
+        b := fb;
+
+      while (x + ((k + 1) div 2) > r) do
+        k := k - 1;
+      while (y + ((k + 1) div 2) > b) do
+        k := k - 1;
+      while (x - (k div 2) < 0) do
+        k := k - 1;
+      while (y - (k div 2) < 0) do
+        k := k - 1;
+      Image1.Canvas.Pen.Width := k;
+      Shape6.Left := X - k div 2;
+      Shape6.Top := Y - k div 2;
+      Shape6.Width := k;
+      Shape6.Height := k;
+      Shape6.Visible := True;
+    end;
+
+if  isMousePressed then
+begin
+  mx := x;
+  my := y;
+  if (tp = 1) or (tp = 2) then
+  begin
+      Image1.Canvas.LineTo(X, Y);
+      Image1.Refresh;
+  end
+  else if (tp = 3) then
+  begin
+      i := 0;
+      line();
+      Shape2.Left := sx - 2;
+      Shape3.Left := x - 2;
+      Shape2.Top := sy  - 2;
+      Shape3.Top := y  - 2;
+
+      xp := sx + (x - sx) div 2;
+      yp := sy + (y - sy) div 2;
+
+      Shape1.Left := xp - 2;
+      Shape1.Top := yp  - 2;
+  end
+  else if (tp = 4) or (tp = 5) then
+    begin
+    if x > sx then
+    begin
+      Shape1.Width := x - sx;
+      Shape1.Left := sx;
+    end
+    else
+    begin
+      Shape1.Left := x;
+      Shape1.Width := sx - x;
+    end;
+
+    if y > sy then
+    begin
+      Shape1.Height := y - sy;
+      Shape1.Top := sy;
+    end
+    else
+    begin
+      Shape1.Top := y;
+      Shape1.Height := sy - y;
+    end;
+    end;
+end;
+Image1.Refresh;
+if isMousePressed = False then
+  begin
+  if Panel_Locked = false then
+  begin
+  if (y < Panel1.Height) and (x > Panel1.Left) then
+    Panel1.Visible := True
+  else
+    Panel1.Visible := False;
+  end;
+end;
+end;
+
+procedure TForm1.Image1MouseUp(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  ClipCursor(nil);
+  isMousePressed := false;
+  Shape1.Visible := False;
+  Shape2.Visible := False;
+  Shape3.Visible := False;
+  Shape4.Visible := False;
+  Shape5.Visible := False;
+  if tp = 3 then
+    Image1.Canvas.LineTo(X, Y)
+  else if tp = 4 then
+    Image1.Canvas.Rectangle(X, Y, sx, sy)
+  else if tp = 5 then
+    Image1.Canvas.Ellipse(X, Y, sx, sy);
+end;
+
+procedure TForm1.ToolButton2Click(Sender: TObject);
+begin
+  tp := 2;
+  Shape6.Shape := stCircle;
+end;
+
+procedure TForm1.ToolButton4Click(Sender: TObject);
+begin
+  tp := 4;
+  Shape1.Shape := stRectangle;
+  Shape6.Visible := false;
+end;
+
+procedure TForm1.ToolButton3Click(Sender: TObject);
+begin
+  tp := 3;
+  Shape1.Shape := stCircle;
+  Shape1.Width := 5;
+  Shape1.Height := 5;
+  Shape4.Width := Shape1.Width;
+  Shape2.Width := Shape1.Width;
+  Shape3.Width := Shape1.Width;
+  Shape5.Width := Shape1.Width;
+  Shape2.Height := Shape1.Height;
+  Shape3.Height := Shape1.Height;
+  Shape4.Height := Shape1.Height;
+  Shape5.Height := Shape1.Height;
+
+  Shape6.Visible := false;
+end;
+
+procedure TForm1.ToolButton5Click(Sender: TObject);
+begin
+  tp := 5;
+  Shape1.Shape := stEllipse;
+  Shape6.Visible := false;
+end;
+
+procedure TForm1.ToolButton1Click(Sender: TObject);
+begin
+  tp := 1;
+  Shape6.Visible := false;
+end;
+
+procedure TForm1.FormResize(Sender: TObject);
+begin
+  ft := 0;
+  fb := Form1.Height - 40;
+  fl := 0;
+  fr := Form1.Width - 16;
+
+  Image1.Left := 0;
+  Image1.Top := 0;
+  Panel1.Top := ft;
+  Panel1.Left := fr - Panel1.Width - 2;
+end;
+
+
+
+procedure TForm1.FormKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if Key = VK_space then
+  begin
+    if Panel_Locked then
+      Panel_Locked := false
+    else
+      Panel_Locked := true;
+  end;
+end;
+
+procedure TForm1.ToolButton8Click(Sender: TObject);
+begin
+  Image1.Picture:= nil;
+  Image1.Canvas.Brush.Style := bsClear;
+  Image1.Enabled := True;
+end;
+
+procedure TForm1.ToolButton9Click(Sender: TObject);
+begin
+  close;
+end;
+
+procedure TForm1.Panel1MouseMove(Sender: TObject; Shift: TShiftState; X,
+  Y: Integer);
+begin
+  if tp = 2 then
+    Shape6.Visible := False;
+end;
+
+procedure TForm1.ToolButton7Click(Sender: TObject);
+begin
+  if OpenDialog1.Execute then
+  begin
+    Image1.Picture.LoadFromFile(OpenDialog1.FileName);
+  Image1.Left := 0;
+  Image1.Top := 0;
+  Image1.Width := Image1.Picture.Width;
+  Image1.Height := Image1.Picture.Height;
+  Image1.Canvas.Brush.Style := bsClear;
+  Image1.Enabled := True;
+  end;
+end;
+
+procedure TForm1.ToolButton6Click(Sender: TObject);
+begin
+  if SaveDialog1.Execute then
+  begin
+  if pos('.bmp', SaveDialog1.FileName) <> 0 then
+    Image1.Picture.SaveToFile(SaveDialog1.FileName)
+  else
+    Image1.Picture.SaveToFile(SaveDialog1.FileName + '.bmp');
+  end;
+  Image1.Canvas.Brush.Style := bsClear;
+end;
+
+procedure TForm1.FormMouseMove(Sender: TObject; Shift: TShiftState; X,
+  Y: Integer);
+begin
+if isMousePressed = False then
+  begin
+  if Panel_Locked = false then
+    Panel1.Visible := True
+  end;
+end;
+
+procedure TForm1.ToolButton11Click(Sender: TObject);
+begin
+  if OpenDialog2.Execute then
+  begin
+     Image1.Picture.LoadFromFile(OpenDialog2.FileName);
+     Image1.Enabled := False;
+  end;
+end;
+
+procedure TForm1.ToolButton13Click(Sender: TObject);
+begin
+  tp := 6;
+  Shape6.Visible := false;
+end;
+
+procedure TForm1.Edit1KeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+if Key = VK_return then
+begin
+Edit1.Visible := False;
+Edit1.Enabled := False;
+Image1.Canvas.TextOut(Edit1.Left, Edit1.Top, Edit1.Text);
+end;
+end;
+
+end.
